@@ -15,9 +15,7 @@ type HistoryItem = {
 
 function createId() {
   return (
-    Date.now().toString(36) +
-    "-" +
-    Math.random().toString(36).substring(2, 10)
+    Date.now().toString(36) + "-" + Math.random().toString(36).substring(2, 10)
   );
 }
 
@@ -367,19 +365,37 @@ export default function HomePage() {
         </section>
 
         {/* Right: AI response */}
+        {/* Right: AI response */}
         <section className="rounded-xl border border-slate-800 bg-slate-900/70 p-4 shadow-sm shadow-slate-950/40 transition-colors hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-slate-100">
-              AI response
-            </h2>
-            {currentTopicId && (
-              <p className="mt-1 text-[11px] text-emerald-400">
-                Detected topic:{" "}
-                {topicMetaFromId(currentTopicId)?.label ?? "Other"}
-              </p>
-            )}
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-sm font-semibold text-slate-100">
+                AI response
+              </h2>
+              {currentTopicId && (
+                <p className="mt-1 text-[11px] text-emerald-400">
+                  Detected topic:{" "}
+                  {topicMetaFromId(currentTopicId)?.label ?? "Other"}
+                </p>
+              )}
+            </div>
 
             <div className="flex items-center gap-2">
+              {/* EDIT button */}
+              {response && !loading && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditing(true);
+                    setDraftResponse(response);
+                    setEditingHistoryId(history[0]?.id ?? null);
+                  }}
+                  className="inline-flex items-center rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 text-[11px] text-slate-200 hover:bg-slate-800"
+                >
+                  Edit
+                </button>
+              )}
+
               {copied && (
                 <span className="text-[11px] text-emerald-400">Copied ✅</span>
               )}
@@ -393,6 +409,7 @@ export default function HomePage() {
               </button>
             </div>
           </div>
+
           <div className="mt-2 min-h-[180px] rounded-xl border border-slate-800 bg-slate-900/60 p-4 text-sm text-slate-100">
             {loading ? (
               <div className="space-y-2 animate-pulse">

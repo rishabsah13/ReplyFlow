@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Customer Support Assistant
 
-## Getting Started
+A modern SaaS-style web app to draft customer support replies with AI-like speed.
 
-First, run the development server:
+## Tech stack
+
+- Next.js (App Router, TypeScript)
+- Tailwind CSS
+- Keyword-based “AI” engine (mockable, ready to swap with real LLM)
+- LocalStorage for client-side persistence
+
+## Features
+
+- **Customer message input**
+  - Paste or type support emails, chats, or tickets.
+- **Tone selector**
+  - Switch between Professional, Friendly, and Apologetic replies.
+- **Smart canned responses**
+  - Keyword-based engine generates structured replies for:
+    - Billing / refunds
+    - Login / access issues
+    - Subscription changes / cancellations
+    - Feature requests
+    - Performance issues
+    - Fallback: escalates unusual cases to a human agent
+- **Response history**
+  - Saves all generated replies with timestamps and tone.
+  - Persists across sessions via `localStorage`.
+  - One-click **Reuse** to load a previous reply back into the editor.
+- **Edit & Regenerate**
+  - Inline **Edit** to tweak any reply and save the updated version.
+  - **Regenerate** for a fresh draft using the same customer message and tone.
+- **Copy to clipboard**
+  - One-click copy with “Copied ✅” micro-feedback.
+- **Message categorization**
+  - Automatic tags (Refund, Subscription, Login, Performance, Feature Request, Needs Review).
+  - Visible as badges in the response header and history list.
+- **UI/UX**
+  - Dark SaaS dashboard layout with sidebar and workspace pill.
+  - Responsive 2-column layout.
+  - Subtle shadows, hover states, and tight typography.
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The current version uses a mock response engine only and does **not** require any API keys.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To enable a real LLM later, replace the mock engine in `src/app/api/generate/route.ts` with your preferred provider.
